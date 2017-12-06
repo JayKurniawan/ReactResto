@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { Icon,Header,Button,ButtonGroup } from 'react-native-elements'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -61,8 +62,13 @@ class MainRestoScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRowsAndSections(dataObjects)
     }
-  }
 
+    this.stateButton = {
+    selectedIndex: 2
+    }
+    this.updateIndex = this.updateIndex.bind(this)
+  }
+  
   /* ***********************************************************
   * STEP 3
   * `renderRow` function -How each cell/row should be rendered
@@ -115,9 +121,22 @@ class MainRestoScreen extends React.Component {
     }
   }
 
+  updateIndex (selectedIndex) {
+    this.setState({selectedIndex})
+  }
+
   render () {
+    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
+    const { selectedIndex } = this.stateButton
+
     return (
       <View style={styles.container}>
+        <Header 
+          centerComponent={
+            <Icon name='bowl' type='entypo' iconStyle={styles.iconStyle}/>
+          } 
+          //rightComponent={}
+        />
         <ListView
           renderSectionHeader={this.renderHeader}
           contentContainerStyle={styles.listContent}
@@ -125,6 +144,12 @@ class MainRestoScreen extends React.Component {
           onLayout={this.onLayout}
           renderRow={this.renderRow}
           enableEmptySections
+        />
+        <ButtonGroup
+          onPress={this.updateIndex}
+          selectedIndex={selectedIndex}
+          buttons={buttons}
+          containerStyle={{height: 100}} 
         />
       </View>
     )
@@ -141,5 +166,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
   }
 }
+
+  const component1 = () => <Text>Hello</Text>
+  const component2 = () => <Text>World</Text>
+  const component3 = () => <Text>ButtonGroup</Text>
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainRestoScreen)
