@@ -10,8 +10,9 @@ export default StyleSheet.create({
   row: {
     flex: 1,
     backgroundColor: Colors.coal,
-    marginVertical: Metrics.smallMargin,
-    justifyContent: 'center'
+    //marginVertical: Metrics.smallMargin,
+    justifyContent: 'center',
+    height: 150,
   },
   boldLabel: {
     fontWeight: 'bold',
@@ -22,21 +23,35 @@ export default StyleSheet.create({
   },
   label: {
     textAlign: 'center',
-    color: Colors.snow
+    color: Colors.bars
   },
-  listContent: {
-    marginTop: Metrics.baseMargin,
-  },
+
   buttonsMenu:{
     flex: 1,
     justifyContent: 'center',
     marginTop: 5,
   },
-  bar:{
-    backgroundColor: Colors.footer
+  bars:{
+    backgroundColor: Colors.bars
   },
-  icons:{
-     color: Colors.snow, 
-     width: 30
+  toolbar:{
+    backgroundColor: Colors.bars,
+    paddingTop:30,
+    paddingBottom:10,
+    flexDirection:'row'  
+  },
+  toolbarButton:{
+    width:70,            
+    textAlign:'center',
+    flex: 1,
+  },
+  dropdownMenu:{
+    width:70,
+    paddingTop: 12
+  },
+  toolbarTitle:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex:1                
   }
 })

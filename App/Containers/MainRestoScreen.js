@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, ListView, Text } from 'react-native'
+import { TouchableOpacity, View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Icon } from 'react-native-elements'
-import {Button, Container, Header, Content, Footer, Title} from 'native-base'
+import { Icon, Header } from 'react-native-elements'
+import {Button, Container, Content, Footer, Title} from 'native-base'
 //import { Dropdown } from 'react-native-material-dropdown'
+//import ModalDropdown from 'react-native-modal-dropdown'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -64,11 +65,6 @@ class MainRestoScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRowsAndSections(dataObjects)
     }
-
-    this.stateButton = {
-    selectedIndex: 2
-    }
-    this.updateIndex = this.updateIndex.bind(this)
   }
 
   /* ***********************************************************
@@ -83,10 +79,10 @@ class MainRestoScreen extends React.Component {
     // You can condition on sectionID (key as string), for different cells
     // in different sections
     return (
-      <View style={styles.row}>
+      <TouchableOpacity style={styles.row}>
         <Text style={styles.boldLabel}>Section {sectionID} - {rowData.title}</Text>
         <Text style={styles.label}>{rowData.description}</Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -114,30 +110,16 @@ class MainRestoScreen extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
-  renderHeader (data, sectionID) {
-    switch (sectionID) {
-      case 'first':
-        return <View style={styles.sectionHeader}><Text style={styles.boldLabel}>First Section</Text></View>
-      default:
-        return <View style={styles.sectionHeader}><Text style={styles.boldLabel}>Second Section</Text></View>
-    }
-  }
-
-  updateIndex (selectedIndex) {
-    this.setState({selectedIndex})
-  }
-
   render () {
     return (
       <Container>
-        <Header style={ styles.bar }>
-          <Button transparent style={ styles.buttonsMenu } >
-            <Icon name='yelp' type='entypo' color='white' size={40}/>
-          </Button>          
-        </Header>
+        <View style={styles.toolbar}>
+          <Text style={styles.toolbarButton}></Text>
+          <Icon name='bowl' type='entypo' size={40} color='white'/>
+          <Text style={styles.toolbarButton}></Text>
+        </View>
         <Content>
           <ListView
-            renderSectionHeader={this.renderHeader}
             contentContainerStyle={styles.listContent}
             dataSource={this.state.dataSource}
             onLayout={this.onLayout}
@@ -145,7 +127,7 @@ class MainRestoScreen extends React.Component {
             enableEmptySections
           />
         </Content>
-        <Footer style={ styles.bar }>
+        <Footer style={ styles.bars }>
           <Button transparent style={ styles.buttonsMenu }>
             <Icon name='location' type='entypo' color='white' size={30}/>
           </Button>
