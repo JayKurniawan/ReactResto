@@ -25,10 +25,18 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   listContent: {
-    marginTop: Metrics.baseMargin
+    marginTop: Metrics.baseMargin,
   },
-  iconStyle:{
-    fontSize: 40,
-    color: Colors.snow
+  buttonsMenu:{
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 5,
+  },
+  bar:{
+    backgroundColor: Colors.footer
+  },
+  icons:{
+     color: Colors.snow, 
+     width: 30
   }
 })

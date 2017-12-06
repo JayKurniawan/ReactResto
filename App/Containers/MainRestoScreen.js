@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Icon,Header,Button,ButtonGroup } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
+import {Button, Container, Header, Content, Footer, Title} from 'native-base'
+//import { Dropdown } from 'react-native-material-dropdown'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -68,7 +70,7 @@ class MainRestoScreen extends React.Component {
     }
     this.updateIndex = this.updateIndex.bind(this)
   }
-  
+
   /* ***********************************************************
   * STEP 3
   * `renderRow` function -How each cell/row should be rendered
@@ -126,32 +128,35 @@ class MainRestoScreen extends React.Component {
   }
 
   render () {
-    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
-    const { selectedIndex } = this.stateButton
-
     return (
-      <View style={styles.container}>
-        <Header 
-          centerComponent={
-            <Icon name='bowl' type='entypo' iconStyle={styles.iconStyle}/>
-          } 
-          //rightComponent={}
-        />
-        <ListView
-          renderSectionHeader={this.renderHeader}
-          contentContainerStyle={styles.listContent}
-          dataSource={this.state.dataSource}
-          onLayout={this.onLayout}
-          renderRow={this.renderRow}
-          enableEmptySections
-        />
-        <ButtonGroup
-          onPress={this.updateIndex}
-          selectedIndex={selectedIndex}
-          buttons={buttons}
-          containerStyle={{height: 100}} 
-        />
-      </View>
+      <Container>
+        <Header style={ styles.bar }>
+          <Button transparent style={ styles.buttonsMenu } >
+            <Icon name='yelp' type='entypo' color='white' size={40}/>
+          </Button>          
+        </Header>
+        <Content>
+          <ListView
+            renderSectionHeader={this.renderHeader}
+            contentContainerStyle={styles.listContent}
+            dataSource={this.state.dataSource}
+            onLayout={this.onLayout}
+            renderRow={this.renderRow}
+            enableEmptySections
+          />
+        </Content>
+        <Footer style={ styles.bar }>
+          <Button transparent style={ styles.buttonsMenu }>
+            <Icon name='location' type='entypo' color='white' size={30}/>
+          </Button>
+          <Button transparent style={ styles.buttonsMenu }>
+            <Icon name='heart' type='foundation' color='white' size={30}/>
+          </Button>
+          <Button transparent style={ styles.buttonsMenu }>
+            <Icon name='bell' type='entypo' color='white' size={30}/>
+          </Button>
+        </Footer>
+      </Container>
     )
   }
 }
@@ -166,9 +171,5 @@ const mapDispatchToProps = (dispatch) => {
   return {
   }
 }
-
-  const component1 = () => <Text>Hello</Text>
-  const component2 = () => <Text>World</Text>
-  const component3 = () => <Text>ButtonGroup</Text>
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainRestoScreen)
