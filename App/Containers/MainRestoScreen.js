@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { TouchableOpacity, View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'react-native-elements'
-import {Button, Container, Content, Footer, Title} from 'native-base'
-//import { Dropdown } from 'react-native-material-dropdown'
-//import ModalDropdown from 'react-native-modal-dropdown'
+import { Button, Container, Content, Footer, Title} from 'native-base'
+import { Picker } from 'react-native-picker-dropdown'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -65,6 +64,8 @@ class MainRestoScreen extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRowsAndSections(dataObjects)
     }
+
+    this.stateCity = { language: "js" }
   }
 
   /* ***********************************************************
@@ -115,10 +116,21 @@ class MainRestoScreen extends React.Component {
       <Container>
         <View style={styles.toolbar}>
           <Text style={styles.toolbarButton}></Text>
-          <Icon name='bowl' type='entypo' size={40} color='white'/>
-          <Text style={styles.toolbarButton}></Text>
+          <Icon name='bowl' type='entypo' size={40} color='white'/> 
+          <Picker
+            style={styles.dropdown}
+            selectedValue={this.state.language}
+            onValueChange={(language) => this.setState({language})}>
+            <Picker.Item label="New York City" value="ny" />
+            <Picker.Item label="New Jersey" value="nj" />
+            <Picker.Item label="Los Angeles" value="la" />
+            <Picker.Item label="Oklahoma City" value="oc" />
+          </Picker> 
         </View>
-        <Content>
+        <View  style={styles.viewDropdown}>
+          
+        </View>
+        <Content>        
           <ListView
             contentContainerStyle={styles.listContent}
             dataSource={this.state.dataSource}

@@ -36,22 +36,29 @@ export default StyleSheet.create({
   },
   toolbar:{
     backgroundColor: Colors.bars,
-    paddingTop:30,
+    paddingTop:10,
     paddingBottom:10,
     flexDirection:'row'  
   },
   toolbarButton:{
-    width:70,            
+    marginLeft: 40,            
     textAlign:'center',
     flex: 1,
-  },
-  dropdownMenu:{
-    width:70,
-    paddingTop: 12
   },
   toolbarTitle:{
     alignItems: 'center',
     justifyContent: 'center',
-    flex:1                
+    flex:1,        
+    position: 'absolute'        
+  },
+  dropdown:{
+    backgroundColor: Colors.dropdown,
+    color: Colors.snow,
+    marginLeft: 40,
+    flex: 1,
+  },
+  viewDropdown:{
+    justifyContent: 'center',
+    backgroundColor: Colors.dropdown
   }
 })
