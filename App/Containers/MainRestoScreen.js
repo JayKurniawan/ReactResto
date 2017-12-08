@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View, ListView, Text } from 'react-native'
+import { Picker, TouchableOpacity, View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'react-native-elements'
 import { Button, Container, Content, Footer, Title} from 'native-base'
-import { Picker } from 'react-native-picker-dropdown'
+import API from '../Services/Api'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -20,33 +20,7 @@ class MainRestoScreen extends React.Component {
     * This is an array of objects with the properties you desire
     * Usually this should come from Redux mapStateToProps
     *************************************************************/
-    const dataObjects = {
-      first: [
-        {title: 'First Title', description: 'First Description'},
-        {title: 'Second Title', description: 'Second Description'},
-        {title: 'Third Title', description: 'Third Description'},
-        {title: 'Fourth Title', description: 'Fourth Description'},
-        {title: 'Fifth Title', description: 'Fifth Description'},
-        {title: 'Sixth Title', description: 'Sixth Description'},
-        {title: 'Seventh Title', description: 'Seventh Description'},
-        {title: 'Eighth Title', description: 'Eighth Description'},
-        {title: 'Ninth Title', description: 'Ninth Description'},
-        {title: 'Tenth Title', description: 'Tenth Description'}
-      ],
-      second: [
-        {title: 'Eleventh Title', description: 'Eleventh Description'},
-        {title: '12th Title', description: '12th Description'},
-        {title: '13th Title', description: '13th Description'},
-        {title: '14th Title', description: '14th Description'},
-        {title: '15th Title', description: '15th Description'},
-        {title: '16th Title', description: '16th Description'},
-        {title: '17th Title', description: '17th Description'},
-        {title: '18th Title', description: '18th Description'},
-        {title: '19th Title', description: '19th Description'},
-        {title: '20th Title', description: '20th Description'},
-        {title: 'BLACKJACK!', description: 'BLACKJACK! Description'}
-      ]
-    }
+    const dataObjects = []
     /* ***********************************************************
     * STEP 2
     * Teach datasource how to detect if rows are different
@@ -58,14 +32,16 @@ class MainRestoScreen extends React.Component {
     const sectionHeaderHasChanged = (s1, s2) => s1 !== s2
 
     // DataSource configured
-    const ds = new ListView.DataSource({rowHasChanged, sectionHeaderHasChanged})
+    this.ds = new ListView.DataSource({rowHasChanged, sectionHeaderHasChanged})
 
     // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRowsAndSections(dataObjects)
+      dataSource: this.ds.cloneWithRowsAndSections(dataObjects)
     }
 
-    this.stateCity = { language: "js" }
+    this.stateCity = { city: "ny" }
+
+    this.getRestoCategories
   }
 
   /* ***********************************************************
@@ -119,8 +95,8 @@ class MainRestoScreen extends React.Component {
           <Icon name='bowl' type='entypo' size={40} color='white'/> 
           <Picker
             style={styles.dropdown}
-            selectedValue={this.state.language}
-            onValueChange={(language) => this.setState({language})}>
+            selectedValue={this.state.city}
+            onValueChange={(city) => this.setState({city})}>
             <Picker.Item label="New York City" value="ny" />
             <Picker.Item label="New Jersey" value="nj" />
             <Picker.Item label="Los Angeles" value="la" />
@@ -164,6 +140,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
   }
+}
+
+getRestoCategories = async () => {
+  const api = API.create()
+  const categories = await api.getCategories()
+  this.setState({
+  datasource: this.ds.cloneWithRowsAndSections[categories.data]
+  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainRestoScreen)
