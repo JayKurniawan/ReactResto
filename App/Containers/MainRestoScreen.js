@@ -20,7 +20,20 @@ class MainRestoScreen extends React.Component {
     * This is an array of objects with the properties you desire
     * Usually this should come from Redux mapStateToProps
     *************************************************************/
-    const dataObjects = []
+    const dataObjects = {
+      first: [
+        {title: 'First Title', description: 'First Description'},
+        {title: 'Second Title', description: 'Second Description'},
+        {title: 'Third Title', description: 'Third Description'},
+        {title: 'Fourth Title', description: 'Fourth Description'},
+        {title: 'Fifth Title', description: 'Fifth Description'},
+        {title: 'Sixth Title', description: 'Sixth Description'},
+        {title: 'Seventh Title', description: 'Seventh Description'},
+        {title: 'Eighth Title', description: 'Eighth Description'},
+        {title: 'Ninth Title', description: 'Ninth Description'},
+        {title: 'Tenth Title', description: 'Tenth Description'}
+      ]
+    }
     /* ***********************************************************
     * STEP 2
     * Teach datasource how to detect if rows are different
@@ -140,14 +153,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
   }
-}
-
-getRestoCategories = async () => {
-  const api = API.create()
-  const categories = await api.getCategories()
-  this.setState({
-  datasource: this.ds.cloneWithRowsAndSections[categories.data]
-  })
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainRestoScreen)

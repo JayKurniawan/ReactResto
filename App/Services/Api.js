@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://developers.zomato.com/api/v2.1/') => {
+const create = (baseURL = 'https://api.github.com/') => {
   // ------
   // STEP 1
   // ------
@@ -34,7 +34,9 @@ const create = (baseURL = 'https://developers.zomato.com/api/v2.1/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getCategories = () => api.get('categories') 
+  const getRoot = () => api.get('')
+  const getRate = () => api.get('rate_limit')
+  const getUser = (username) => api.get('search/users', {q: username})
 
   // ------
   // STEP 3
@@ -50,7 +52,9 @@ const create = (baseURL = 'https://developers.zomato.com/api/v2.1/') => {
   //
   return {
     // a list of the API functions from step 2
-    getCategories
+    getRoot,
+    getRate,
+    getUser
   }
 }
 
