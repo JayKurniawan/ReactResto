@@ -8,18 +8,19 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   row: {
-    flex: 1,
     backgroundColor: Colors.coal,
-    //marginVertical: Metrics.smallMargin,
     justifyContent: 'center',
-    height: 150,
+    height: 200,
+    flex: 1
   },
   boldLabel: {
+    flex: 1,
+    fontSize: 30,
     fontWeight: 'bold',
     alignSelf: 'center',
     color: Colors.snow,
     textAlign: 'center',
-    marginBottom: Metrics.smallMargin
+    position: 'relative'
   },
   label: {
     textAlign: 'center',
@@ -60,5 +61,9 @@ export default StyleSheet.create({
   viewDropdown:{
     justifyContent: 'center',
     backgroundColor: Colors.dropdown
+  },
+  categoriesBackground:{
+    height: 155, 
+    width: 450
   }
 })

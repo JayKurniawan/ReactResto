@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Picker, TouchableOpacity, View, ListView, Text } from 'react-native'
+import { Image, Picker, TouchableOpacity, View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'react-native-elements'
 import { Button, Container, Content, Footer, Title} from 'native-base'
 import  ReactRestoActions from '../Redux/ReactRestoRedux'
+
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
 
@@ -22,7 +23,7 @@ class MainRestoScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      dataObjects: [],
+      categories: [],
       dataSource: ds.cloneWithRows([])
     }
 
@@ -36,8 +37,8 @@ class MainRestoScreen extends React.Component {
       this.props.categoriesRequest()
     }else{
       this.setState({
-        dataObjects: this.props.payload.dataObjects,
-        dataSource: this.state.dataSource(cloneWithRows(this.props.dataObjects))
+        categories: this.props.payload.categories,
+        dataSource: this.state.dataSource(cloneWithRows(this.props.categories))
       })
     }
   }
@@ -45,8 +46,8 @@ class MainRestoScreen extends React.Component {
   checkCategories(newProps){
     if(newProps.payload){
       this.setState({
-        dataObjects: newProps.payload.dataObjects,
-        dataSource: this.state.dataSource.cloneWithRows(newProps.payload.dataObjects)
+        categories: newProps.payload.categories,
+        dataSource: this.state.dataSource.cloneWithRows(newProps.payload.categories)
       })
     }
   }
@@ -62,31 +63,23 @@ class MainRestoScreen extends React.Component {
   renderRow (rowData, sectionID) {
     // You can condition on sectionID (key as string), for different cells
     // in different sections
+
+    /*
+    it will be great if I can use this
+    <Image source={{ uri: '../Images/CategoriesBackground/' + rowData.categories.id + '.jpg' }} />
+
+    or this one
+
+    <Image source={require('../Images/CategoriesBackground/' + rowData.categories.id + '.jpg')} style = {styles.categoriesBackground}/>
+    */
+
     return (
       <TouchableOpacity style={styles.row}>
-        <Text style={styles.boldLabel}>Section {sectionID} - {rowData.dataObjects.name}</Text>
-        <Text style={styles.label}>{rowData.dataObjects.id}</Text>
+        <Text style={styles.boldLabel}>{rowData.categories.name}</Text>
+        <Image source={require('../Images/CategoriesBackground/1.jpg')} style = {styles.categoriesBackground}/>
       </TouchableOpacity>
     )
   }
-
-  /* ***********************************************************
-  * STEP 4
-  * If your datasource is driven by Redux, you'll need to
-  * reset it when new data arrives.
-  * DO NOT! place `cloneWithRowsAndSections` inside of render, since render
-  * is called very often, and should remain fast!  Just replace
-  * state's datasource on newProps.
-  *
-  * e.g.
-    componentWillReceiveProps (newProps) {
-      if (newProps.someData) {
-        this.setState(prevState => ({
-          dataSource: prevState.dataSource.cloneWithRowsAndSections(newProps.someData)
-        }))
-      }
-    }
-  *************************************************************/
 
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty
