@@ -6,7 +6,8 @@ import rootSaga from '../Sagas/'
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
   github: require('./GithubRedux').reducer,
-  search: require('./SearchRedux').reducer
+  search: require('./SearchRedux').reducer,
+  reactResto: require('./ReactRestoRedux').reducer
 })
 
 export default () => {
@@ -24,6 +25,5 @@ export default () => {
       })
     })
   }
-
   return store
 }

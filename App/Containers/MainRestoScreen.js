@@ -3,8 +3,7 @@ import { Picker, TouchableOpacity, View, ListView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'react-native-elements'
 import { Button, Container, Content, Footer, Title} from 'native-base'
-import API from '../Services/Api'
-
+import  ReactRestoActions from '../Redux/ReactRestoRedux'
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
 
@@ -15,63 +14,58 @@ class MainRestoScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    /* ***********************************************************
-    * STEP 1
-    * This is an array of objects with the properties you desire
-    * Usually this should come from Redux mapStateToProps
-    *************************************************************/
-    const dataObjects = {
-      first: [
-        {title: 'First Title', description: 'First Description'},
-        {title: 'Second Title', description: 'Second Description'},
-        {title: 'Third Title', description: 'Third Description'},
-        {title: 'Fourth Title', description: 'Fourth Description'},
-        {title: 'Fifth Title', description: 'Fifth Description'},
-        {title: 'Sixth Title', description: 'Sixth Description'},
-        {title: 'Seventh Title', description: 'Seventh Description'},
-        {title: 'Eighth Title', description: 'Eighth Description'},
-        {title: 'Ninth Title', description: 'Ninth Description'},
-        {title: 'Tenth Title', description: 'Tenth Description'}
-      ]
-    }
-    /* ***********************************************************
-    * STEP 2
-    * Teach datasource how to detect if rows are different
-    * Make this function fast!  Perhaps something like:
-    *   (r1, r2) => r1.id !== r2.id}
-    *   The same goes for sectionHeaderHasChanged
-    *************************************************************/
     const rowHasChanged = (r1, r2) => r1 !== r2
     const sectionHeaderHasChanged = (s1, s2) => s1 !== s2
 
     // DataSource configured
-    this.ds = new ListView.DataSource({rowHasChanged, sectionHeaderHasChanged})
+    const ds = new ListView.DataSource({rowHasChanged, sectionHeaderHasChanged})
 
     // Datasource is always in state
     this.state = {
-      dataSource: this.ds.cloneWithRowsAndSections(dataObjects)
+      dataObjects: [],
+      dataSource: ds.cloneWithRows([])
     }
 
     this.stateCity = { city: "ny" }
-
-    this.getRestoCategories
   }
 
-  /* ***********************************************************
-  * STEP 3
-  * `renderRow` function -How each cell/row should be rendered
-  * It's our best practice to place a single component here:
-  *
-  * e.g.
-    return <MyCustomCell title={rowData.title} description={rowData.description} />
-  *************************************************************/
+  prepareCategories(){
+    //check is there any data
+    if(!this.props.payload){
+      //no data, call api
+      this.props.categoriesRequest()
+    }else{
+      this.setState({
+        dataObjects: this.props.payload.dataObjects,
+        dataSource: this.state.dataSource(cloneWithRows(this.props.dataObjects))
+      })
+    }
+  }
+
+  checkCategories(newProps){
+    if(newProps.payload){
+      this.setState({
+        dataObjects: newProps.payload.dataObjects,
+        dataSource: this.state.dataSource.cloneWithRows(newProps.payload.dataObjects)
+      })
+    }
+  }
+
+  componentWillMount(){
+    this.prepareCategories()
+  }
+
+  componentWillReceiveProps(newProps){
+    this.checkCategories(newProps)
+  }
+
   renderRow (rowData, sectionID) {
     // You can condition on sectionID (key as string), for different cells
     // in different sections
     return (
       <TouchableOpacity style={styles.row}>
-        <Text style={styles.boldLabel}>Section {sectionID} - {rowData.title}</Text>
-        <Text style={styles.label}>{rowData.description}</Text>
+        <Text style={styles.boldLabel}>Section {sectionID} - {rowData.dataObjects.name}</Text>
+        <Text style={styles.label}>{rowData.dataObjects.id}</Text>
       </TouchableOpacity>
     )
   }
@@ -116,9 +110,6 @@ class MainRestoScreen extends React.Component {
             <Picker.Item label="Oklahoma City" value="oc" />
           </Picker> 
         </View>
-        <View  style={styles.viewDropdown}>
-          
-        </View>
         <Content>        
           <ListView
             contentContainerStyle={styles.listContent}
@@ -144,14 +135,20 @@ class MainRestoScreen extends React.Component {
   }
 }
 
+//MainRestoScreen.propsTypes = {}
+
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
+    payload: state.reactResto.payload,
+    errorMessage: state.reactResto.errorMessage,
+    fetchCategories: state.reactResto.fetchCategories
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    categoriesRequest: () => dispatch(ReactRestoActions.categoriesRequest())
   }
 }
 
