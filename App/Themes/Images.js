@@ -19,7 +19,21 @@ const images = {
   chevronRight: require('../Images/Icons/chevron-right.png'),
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
-  closeButton: require('../Images/Icons/close-button.png')
+  closeButton: require('../Images/Icons/close-button.png'),
+
+  1: require('../Images/CategoriesBackground/1.jpg'),
+  2: require('../Images/CategoriesBackground/2.jpg'),
+  3: require('../Images/CategoriesBackground/3.jpg'),
+  4: require('../Images/CategoriesBackground/4.jpg'),
+  5: require('../Images/CategoriesBackground/5.jpg'),
+  6: require('../Images/CategoriesBackground/6.jpg'),
+  7: require('../Images/CategoriesBackground/7.jpg'),
+  8: require('../Images/CategoriesBackground/8.jpg'),
+  9: require('../Images/CategoriesBackground/9.jpg'),
+  10: require('../Images/CategoriesBackground/10.jpg'),
+  11: require('../Images/CategoriesBackground/11.jpg'),
+  13: require('../Images/CategoriesBackground/13.jpg'),
+  14: require('../Images/CategoriesBackground/14.jpg'),
 }
 
 export default images

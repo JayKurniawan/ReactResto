@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Icon, Header } from 'react-native-elements'
 import { Button, Container, Content, Footer, Title} from 'native-base'
 import  ReactRestoActions from '../Redux/ReactRestoRedux'
+import { Images } from '../Themes'
 
 // For empty lists
 // import AlertMessage from '../Components/AlertMessage'
@@ -66,17 +67,25 @@ class MainRestoScreen extends React.Component {
 
     /*
     it will be great if I can use this
+    as we render the data, the path will updated automatically
     <Image source={{ uri: '../Images/CategoriesBackground/' + rowData.categories.id + '.jpg' }} />
 
     or this one
 
     <Image source={require('../Images/CategoriesBackground/' + rowData.categories.id + '.jpg')} style = {styles.categoriesBackground}/>
+
+    BUT it doesnt work at all :(
+    
+    TRY :  https://stackoverflow.com/questions/30854232/react-native-image-require-module-using-dynamic-names
+    loop all images in the constructor, call it in return below
+
+    <Image source={require('../Images/CategoriesBackground/1.jpg')} style = {styles.categoriesBackground}/>
     */
 
     return (
-      <TouchableOpacity style={styles.row}>
+      <TouchableOpacity style={styles.row}>    
+        <Image source={Images[rowData.categories.id]} style={styles.categoriesBackground}/>
         <Text style={styles.boldLabel}>{rowData.categories.name}</Text>
-        <Image source={require('../Images/CategoriesBackground/1.jpg')} style = {styles.categoriesBackground}/>
       </TouchableOpacity>
     )
   }

@@ -10,8 +10,7 @@ export default StyleSheet.create({
   row: {
     backgroundColor: Colors.coal,
     justifyContent: 'center',
-    height: 200,
-    flex: 1
+    height: 134
   },
   boldLabel: {
     flex: 1,
@@ -20,7 +19,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     color: Colors.snow,
     textAlign: 'center',
-    position: 'relative'
+    position: 'absolute'
   },
   label: {
     textAlign: 'center',
@@ -63,7 +62,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.dropdown
   },
   categoriesBackground:{
-    height: 155, 
-    width: 450
+    //height: 155, 
+    //width: 450
+
   }
 })
