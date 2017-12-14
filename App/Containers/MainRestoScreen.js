@@ -33,22 +33,22 @@ class MainRestoScreen extends React.Component {
 
   prepareCategories(){
     //check is there any data
-    if(!this.props.payload){
+    if(!this.props.categoriesPayload){
       //no data, call api
       this.props.categoriesRequest()
     }else{
       this.setState({
-        categories: this.props.payload.categories,
+        categories: this.props.categoriesPayload.categories,
         dataSource: this.state.dataSource(cloneWithRows(this.props.categories))
       })
     }
   }
 
   checkCategories(newProps){
-    if(newProps.payload){
+    if(newProps.categoriesPayload){
       this.setState({
-        categories: newProps.payload.categories,
-        dataSource: this.state.dataSource.cloneWithRows(newProps.payload.categories)
+        categories: newProps.categoriesPayload.categories,
+        dataSource: this.state.dataSource.cloneWithRows(newProps.categoriesPayload.categories)
       })
     }
   }
@@ -61,30 +61,15 @@ class MainRestoScreen extends React.Component {
     this.checkCategories(newProps)
   }
 
-  renderRow (rowData, sectionID) {
-    // You can condition on sectionID (key as string), for different cells
-    // in different sections
+  _navigateToRestoList (navigate) {
+    navigate('RestoListScreen')
+  }
 
-    /*
-    it will be great if I can use this
-    as we render the data, the path will updated automatically
-    <Image source={{ uri: '../Images/CategoriesBackground/' + rowData.categories.id + '.jpg' }} />
-
-    or this one
-
-    <Image source={require('../Images/CategoriesBackground/' + rowData.categories.id + '.jpg')} style = {styles.categoriesBackground}/>
-
-    BUT it doesnt work at all :(
-    
-    TRY :  https://stackoverflow.com/questions/30854232/react-native-image-require-module-using-dynamic-names
-    loop all images in the constructor, call it in return below
-
-    <Image source={require('../Images/CategoriesBackground/1.jpg')} style = {styles.categoriesBackground}/>
-    */
-
+  renderRow (rowData) {
+    // const { navigate } = this.props.navigation
     return (
-      <TouchableOpacity style={styles.row}>    
-        <Image source={Images[rowData.categories.id]} style={styles.categoriesBackground}/>
+      <TouchableOpacity style={styles.row} onPress={() => this._navigateToRestoList(navigate)}>    
+        <Image source={Images[rowData.categories.id]} style={styles.categoriesBackground} />
         <Text style={styles.boldLabel}>{rowData.categories.name}</Text>
       </TouchableOpacity>
     )
@@ -97,6 +82,7 @@ class MainRestoScreen extends React.Component {
   }
 
   render () {
+    //const { navigate } = this.props.navigation
     return (
       <Container>
         <View style={styles.toolbar}>
@@ -137,12 +123,12 @@ class MainRestoScreen extends React.Component {
   }
 }
 
-//MainRestoScreen.propsTypes = {}
+//const { navigate } = this.props.navigation
 
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
-    payload: state.reactResto.payload,
+    categoriesPayload: state.reactResto.categoriesPayload,
     errorMessage: state.reactResto.errorMessage,
     fetchCategories: state.reactResto.fetchCategories
   }

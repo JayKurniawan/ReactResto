@@ -14,7 +14,7 @@ import { ReactRestoTypes } from '../Redux/ReactRestoRedux'
 
 import { startup } from './StartupSagas'
 import { getUserAvatar } from './GithubSagas'
-import { getCategories } from './ReactRestoSagas'
+import { getCategories, getRestaurants } from './ReactRestoSagas'
 
 /* ------------- API ------------- */
 
@@ -26,12 +26,11 @@ const api = DebugConfig.useFixtures ? FixtureAPI : ZomatoAPI.create()
 
 export default function * root () {
   yield all([
-    // some sagas only receive an action
-    //takeLatest(StartupTypes.STARTUP, startup),
 
-    // some sagas receive extra parameters in addition to an action
-    //takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
+    takeLatest(ReactRestoTypes.CATEGORIES_REQUEST, getCategories, api),
 
-    takeLatest(ReactRestoTypes.CATEGORIES_REQUEST, getCategories, api)
+    takeLatest(ReactRestoTypes.RESTAURANTS_REQUEST, getRestaurants, api)
+
+
   ])
 }

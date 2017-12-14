@@ -6,7 +6,12 @@ import { Images } from '../Themes'
 import styles from './Styles/LaunchScreenStyles'
 
 export default class LaunchScreen extends Component {
+  navigateToHome (navigate) {
+    navigate('MainRestoScreen')
+  }
+
   render () {
+    const { navigate } = this.props.navigation
     return (
       <View style={styles.mainContainer}>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
@@ -17,7 +22,7 @@ export default class LaunchScreen extends Component {
 
           <View style={styles.section} >
             <Image source={Images.ready} />
-            <Text style={styles.sectionText}>
+            <Text style={styles.sectionText} onPress={() => this.navigateToHome(navigate)}>
               Hello React World! 
             </Text>
           </View>
