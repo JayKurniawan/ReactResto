@@ -6,9 +6,6 @@ import { Button, Container, Content, Footer, Title} from 'native-base'
 import  ReactRestoActions from '../Redux/ReactRestoRedux'
 import { Images } from '../Themes'
 
-// For empty lists
-// import AlertMessage from '../Components/AlertMessage'
-
 // Styles
 import styles from './Styles/MainRestoStyles'
 
@@ -20,7 +17,7 @@ class MainRestoScreen extends React.Component {
     const sectionHeaderHasChanged = (s1, s2) => s1 !== s2
 
     // DataSource configured
-    const ds = new ListView.DataSource({rowHasChanged, sectionHeaderHasChanged})
+    const ds = new ListView.DataSource({rowHasChanged})
 
     // Datasource is always in state
     this.state = {
@@ -28,7 +25,7 @@ class MainRestoScreen extends React.Component {
       dataSource: ds.cloneWithRows([])
     }
 
-    this.stateCity = { city: "ny" }
+    this.stateCity = { city: '280' }
   }
 
   prepareCategories(){
@@ -39,7 +36,7 @@ class MainRestoScreen extends React.Component {
     }else{
       this.setState({
         categories: this.props.categoriesPayload.categories,
-        dataSource: this.state.dataSource(cloneWithRows(this.props.categories))
+        dataSource: this.state.dataSource.cloneWithRows(this.props.categoriesPayload.categories)
       })
     }
   }
@@ -61,15 +58,15 @@ class MainRestoScreen extends React.Component {
     this.checkCategories(newProps)
   }
 
-  _navigateToRestoList (navigate) {
+  navigateToRestoList (navigate, categoryId, ) {
     navigate('RestoListScreen')
   }
 
   renderRow (rowData) {
-    // const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation
     return (
-      <TouchableOpacity style={styles.row} onPress={() => this._navigateToRestoList(navigate)}>    
-        <Image source={Images[rowData.categories.id]} style={styles.categoriesBackground} />
+      <TouchableOpacity style={styles.row} onPress={() => this.navigateToRestoList(navigate)}>    
+        <Image source={Images[rowData.categories.id]} />
         <Text style={styles.boldLabel}>{rowData.categories.name}</Text>
       </TouchableOpacity>
     )
@@ -85,25 +82,27 @@ class MainRestoScreen extends React.Component {
     //const { navigate } = this.props.navigation
     return (
       <Container>
-        <View style={styles.toolbar}>
-          <Text style={styles.toolbarButton}></Text>
-          <Icon name='bowl' type='entypo' size={40} color='white'/> 
+        <Header
+          innerContainerStyles={styles.bars}
+          outerContainerStyles={styles.bars}
+          centerComponent={<Text style={styles.textName}>ReactResto</Text>}
+          rightComponent={ 
           <Picker
             style={styles.dropdown}
             selectedValue={this.state.city}
             onValueChange={(city) => this.setState({city})}>
-            <Picker.Item label="New York City" value="ny" />
-            <Picker.Item label="New Jersey" value="nj" />
-            <Picker.Item label="Los Angeles" value="la" />
-            <Picker.Item label="Oklahoma City" value="oc" />
-          </Picker> 
-        </View>
+            <Picker.Item label="New York City" value="280" />
+            <Picker.Item label="Los Angeles" value="281" />
+            <Picker.Item label="Las Vegas" value="282" />
+            <Picker.Item label="Washington DC" value="283" />
+          </Picker>}
+        />
         <Content>        
           <ListView
             contentContainerStyle={styles.listContent}
             dataSource={this.state.dataSource}
             onLayout={this.onLayout}
-            renderRow={this.renderRow}
+            renderRow={this.renderRow.bind(this)}
             enableEmptySections
           />
         </Content>
@@ -130,13 +129,15 @@ const mapStateToProps = (state) => {
     // ...redux state to props here
     categoriesPayload: state.reactResto.categoriesPayload,
     errorMessage: state.reactResto.errorMessage,
-    fetchCategories: state.reactResto.fetchCategories
+    fetchCategories: state.reactResto.fetchCategories,
+    cityAndCategory: state.reactResto.cityAndCategory
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    categoriesRequest: () => dispatch(ReactRestoActions.categoriesRequest())
+    categoriesRequest: () => dispatch(ReactRestoActions.categoriesRequest()),
+    cityIdAndCategoryId: () => dispatch(ReactRestoActions.cityIdAndCategoryId(city))
   }
 }
 

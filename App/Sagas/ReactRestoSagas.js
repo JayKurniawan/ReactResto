@@ -22,10 +22,10 @@ export function* getRestaurants(action){
     if(response.ok){
         console.log('Request success')
         yield put(ReactRestoActions.restaurantsSucceed(response.data))
-        console.log('Restaurants:', response)
+        console.log('Response:', response)
     }else{
         console.log('Request failed')
         yield put(ReactRestoActions.restaurantsFailed(response.error))
-        console.log('Restaurants:', response)
+        console.log('Response:', response)
     }
 }

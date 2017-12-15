@@ -25,14 +25,15 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.bars
   },
-
   buttonsMenu:{
     flex: 1,
     justifyContent: 'center',
     marginTop: 5,
   },
   bars:{
-    backgroundColor: Colors.bars
+    backgroundColor: Colors.bars,
+    borderBottomWidth:0,
+    height:50
   },
   toolbar:{
     backgroundColor: Colors.bars,
@@ -61,9 +62,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.dropdown
   },
-  categoriesBackground:{
-    //height: 155, 
-    //width: 450
-
+  textName:{
+    fontSize: 20,
+    color: Colors.snow,
+    fontWeight: 'bold',
+    // marginBottom:10
   }
 })

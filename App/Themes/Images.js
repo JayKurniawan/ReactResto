@@ -21,6 +21,7 @@ const images = {
   backButton: require('../Images/Icons/back-button.png'),
   closeButton: require('../Images/Icons/close-button.png'),
 
+  // category images
   1: require('../Images/CategoriesBackground/1.jpg'),
   2: require('../Images/CategoriesBackground/2.jpg'),
   3: require('../Images/CategoriesBackground/3.jpg'),
@@ -34,6 +35,7 @@ const images = {
   11: require('../Images/CategoriesBackground/11.jpg'),
   13: require('../Images/CategoriesBackground/13.jpg'),
   14: require('../Images/CategoriesBackground/14.jpg'),
+  //: require('../Images/CategoriesBackground/16771079.jpg')
 }
 
 export default images

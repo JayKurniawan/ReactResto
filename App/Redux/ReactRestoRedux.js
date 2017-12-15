@@ -9,10 +9,10 @@ const { Types, Creators } = createActions({
     categoriesFailed: ['categoriesErrorMessage'],
 
     // Restaurants types
-    restaurantsRequest: ['restaurant_id'],
+    restaurantsRequest: ['cityId, categoryId'],
     restaurantsSucceed: ['restaurantsPayload'],
     restaurantsFailed: ['restaurantsErrorMessage'],
-    setCityId: ['cityId']
+    cityIdAndCategoryId: ['cityAndCategory']
 })
 
 export const ReactRestoTypes = Types
@@ -26,11 +26,12 @@ export const INITIAL_STATE = Immutable({
     fetchCategories: false,
 
     // Restaurants
-    restaurant_id: null,
+    cityId: null,
+    categoryId: null,
     restaurantsPayload: null,
     fetchRestaurants: false,
     restaurantsErrorMessage: null,
-    cityId: 285
+    cityAndCategory: 285
 })
 
 // Categories Reducers
@@ -48,14 +49,13 @@ export const categoriesFailed = (state) =>
     state.merge({ fetchCategories: false, errorMessage: true})
 
 // Restaurants Reducers
-export const restaurantsRequest = (state, action) => state.merge({
-    fetchRestaurants: true, restaurant_id: action.restaurant_id
-})
+export const restaurantsRequest = (state) => 
+    state.merge({ fetchRestaurants: true })
 
 export const restaurantsSucceed = (state, action) => {
     const {restaurantsPayload} = action
     return state.merge({
-        fetchRestaurants: true, restaurantsErrorMessage: null, restaurantsPayload
+        fetchRestaurants: false, restaurantsErrorMessage: null, restaurantsPayload
     })
 }
 
@@ -63,8 +63,8 @@ export const restaurantsFailed = (state, action) => state.merge({
     fetchRestaurants: false, restaurantsErrorMessage: action.restaurantsErrorMessage
 })
 
-export const setCityId = (state, action) => state.merge({
-    cityId: action.cityId
+export const cityIdAndCategoryId = (state, action) => state.merge({
+    cityAndCategory: action.cityAndCategory
 })
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -77,5 +77,5 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.RESTAURANTS_REQUEST]: restaurantsRequest,
     [Types.RESTAURANTS_SUCCEED]: restaurantsSucceed,
     [Types.RESTAURANTS_FAILED]: restaurantsFailed,
-    [Types.SET_CITY_ID]: setCityId
+    [Types.CITY_ID_AND_CATEGORY_ID]: cityIdAndCategoryId
 })

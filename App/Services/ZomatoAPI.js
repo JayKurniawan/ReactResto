@@ -16,11 +16,11 @@ const create = (baseURL = 'https://developers.zomato.com/api/v2.1/') => {
     const getCategories = () => api.get('categories')
 
     // request for restaurants based on selected category
-   // const getRestaurants = () => api.get('search?entity_id='+''+'&entity_type=city&category='+'')
+    const getRestaurants = () => api.get('search?entity_id=280&entity_type=city&category=1')
 
     return{
         getCategories,
-     //   getRestaurants
+        getRestaurants
     }
 }
 

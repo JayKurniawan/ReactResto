@@ -12,7 +12,7 @@ const PrimaryNav = StackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
+  initialRouteName: 'MainRestoScreen',
   navigationOptions: {
     headerStyle: styles.header
   }
