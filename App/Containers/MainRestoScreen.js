@@ -5,6 +5,7 @@ import { Icon, Header } from 'react-native-elements'
 import { Button, Container, Content, Footer, Title} from 'native-base'
 import  ReactRestoActions from '../Redux/ReactRestoRedux'
 import { Images } from '../Themes'
+import ModalDropdown from 'react-native-modal-dropdown'
 
 // Styles
 import styles from './Styles/MainRestoStyles'
@@ -22,10 +23,11 @@ class MainRestoScreen extends React.Component {
     // Datasource is always in state
     this.state = {
       categories: [],
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds.cloneWithRows([]),
+      city: '280'
     }
 
-    this.stateCity = { city: '280' }
+    // this.stateCity = { city: '280' }
   }
 
   prepareCategories(){
@@ -58,14 +60,14 @@ class MainRestoScreen extends React.Component {
     this.checkCategories(newProps)
   }
 
-  navigateToRestoList (navigate, categoryId, ) {
-    navigate('RestoListScreen')
+  navigateToRestoList (navigate, cityId, categoryId) {
+    navigate('RestoListScreen', {cityId: cityId, categoryId: categoryId})
   }
 
   renderRow (rowData) {
     const { navigate } = this.props.navigation
     return (
-      <TouchableOpacity style={styles.row} onPress={() => this.navigateToRestoList(navigate)}>    
+      <TouchableOpacity style={styles.row} onPress={() => this.navigateToRestoList(navigate, this.state.city, rowData.categories.id)}>    
         <Image source={Images[rowData.categories.id]} />
         <Text style={styles.boldLabel}>{rowData.categories.name}</Text>
       </TouchableOpacity>
@@ -85,18 +87,19 @@ class MainRestoScreen extends React.Component {
         <Header
           innerContainerStyles={styles.bars}
           outerContainerStyles={styles.bars}
-          centerComponent={<Text style={styles.textName}>ReactResto</Text>}
+          leftComponent={<Text style={styles.leftComponent}></Text>}
+          centerComponent={<Text style={styles.centerComponent}>ReactResto</Text>}
           rightComponent={ 
-          <Picker
-            style={styles.dropdown}
-            selectedValue={this.state.city}
-            onValueChange={(city) => this.setState({city})}>
-            <Picker.Item label="New York City" value="280" />
-            <Picker.Item label="Los Angeles" value="281" />
-            <Picker.Item label="Las Vegas" value="282" />
-            <Picker.Item label="Washington DC" value="283" />
-          </Picker>}
-        />
+            <Picker
+              style={styles.rightComponent}
+              selectedValue={this.state.city}
+              onValueChange={(city) => this.setState({city})}>
+              <Picker.Item label="New York City" value="280" />
+              <Picker.Item label="Los Angeles" value="281" />
+              <Picker.Item label="Las Vegas" value="282" />
+              <Picker.Item label="Washington DC" value="283" />
+            </Picker>}
+          />
         <Content>        
           <ListView
             contentContainerStyle={styles.listContent}
@@ -136,8 +139,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    categoriesRequest: () => dispatch(ReactRestoActions.categoriesRequest()),
-    cityIdAndCategoryId: () => dispatch(ReactRestoActions.cityIdAndCategoryId(city))
+    categoriesRequest: () => dispatch(ReactRestoActions.categoriesRequest())
   }
 }
 

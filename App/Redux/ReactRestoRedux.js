@@ -11,8 +11,7 @@ const { Types, Creators } = createActions({
     // Restaurants types
     restaurantsRequest: ['cityId, categoryId'],
     restaurantsSucceed: ['restaurantsPayload'],
-    restaurantsFailed: ['restaurantsErrorMessage'],
-    cityIdAndCategoryId: ['cityAndCategory']
+    restaurantsFailed: ['restaurantsErrorMessage']
 })
 
 export const ReactRestoTypes = Types
@@ -26,12 +25,11 @@ export const INITIAL_STATE = Immutable({
     fetchCategories: false,
 
     // Restaurants
-    cityId: null,
+    cityId: 280,
     categoryId: null,
     restaurantsPayload: null,
     fetchRestaurants: false,
-    restaurantsErrorMessage: null,
-    cityAndCategory: 285
+    restaurantsErrorMessage: null
 })
 
 // Categories Reducers
@@ -49,22 +47,18 @@ export const categoriesFailed = (state) =>
     state.merge({ fetchCategories: false, errorMessage: true})
 
 // Restaurants Reducers
-export const restaurantsRequest = (state) => 
-    state.merge({ fetchRestaurants: true })
+export const restaurantsRequest = (state, action) => 
+    state.merge({ fetchRestaurants: true, cityId: action.cityId, categoryId: action.categoryId })
 
 export const restaurantsSucceed = (state, action) => {
     const {restaurantsPayload} = action
-    return state.merge({
+    return state.merge({    
         fetchRestaurants: false, restaurantsErrorMessage: null, restaurantsPayload
     })
 }
 
 export const restaurantsFailed = (state, action) => state.merge({
     fetchRestaurants: false, restaurantsErrorMessage: action.restaurantsErrorMessage
-})
-
-export const cityIdAndCategoryId = (state, action) => state.merge({
-    cityAndCategory: action.cityAndCategory
 })
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -77,5 +71,4 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.RESTAURANTS_REQUEST]: restaurantsRequest,
     [Types.RESTAURANTS_SUCCEED]: restaurantsSucceed,
     [Types.RESTAURANTS_FAILED]: restaurantsFailed,
-    [Types.CITY_ID_AND_CATEGORY_ID]: cityIdAndCategoryId
 })

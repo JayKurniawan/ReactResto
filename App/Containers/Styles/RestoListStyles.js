@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { ApplicationStyles, Metrics, Colors } from '../../Themes'
-import { colors, Icon } from 'react-native-elements';
+import { colors } from 'react-native-elements';
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -9,63 +9,68 @@ export default StyleSheet.create({
     backgroundColor: Colors.background
   },
   row: {
-    // flex: 1,
-    backgroundColor: Colors.fire,
-    //marginVertical: Metrics.smallMargin,
-    // justifyContent: 'center',
-    height: 650,
-    // width: 150
-    // flexDirection: 'row'
+    backgroundColor: Colors.coal,
+    justifyContent: 'center',
+    // height: 
   },
   boldLabel: {
-    // flexDirection: 'row',
     flex: 1,
+    fontSize: 30,
     fontWeight: 'bold',
-    // alignSelf: 'center',
+    alignSelf: 'center',
     color: Colors.snow,
-    // textAlign: 'center',
-    // marginBottom: Metrics.smallMargin
+    textAlign: 'center',
+    position: 'absolute'
   },
-  restaurantInfo:{
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent: 'space-between'
-  },
-  rowContainer:{
-    flexDirection: 'row'
-  },
-  textInfo:{
-    flex: 1,
-    backgroundColor: Colors.coal,
-    // height: 150,
-  },
-  menus:{
-    color: Colors.fire,
-    fontSize: 30
-  },
-  dropdown:{
-    backgroundColor: Colors.dropdown,
-    color: Colors.snow,
-    marginLeft: 40,
-    flex: 1,
-  },
-  bars:{
-    backgroundColor: Colors.bars,
-    borderBottomWidth:0,
-    height:50
+  label: {
+    textAlign: 'center',
+    color: Colors.bars
   },
   buttonsMenu:{
     flex: 1,
     justifyContent: 'center',
     marginTop: 5,
   },
-  textName:{
-    fontSize: 20,
+  bars:{
+    backgroundColor: Colors.bloodOrange,
+    borderBottomWidth:0,
+    // height:60,
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  toolbarButton:{
+    marginLeft: 40,            
+    textAlign:'center',
+    flex: 1,
+  },
+  rightComponent:{
     color: Colors.snow,
+    width: 70,
+    // marginTop: 100,
+  },
+  centerComponent:{
+    fontSize: 25,
+    color: Colors.silver,
     fontWeight: 'bold',
+    marginLeft: 50
     // marginBottom:10
   },
-  leftButton:{
-    // marginBottom:30
+  viewDropdown:{
+    justifyContent: 'center',
+    backgroundColor: Colors.dropdown
+  },
+  info:{
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  infoLeft:{
+    width: 230,
+    flexDirection: 'row',
+    marginRight: 15
+  },
+  infoRight:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

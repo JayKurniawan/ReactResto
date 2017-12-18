@@ -5,7 +5,7 @@ import ZomatoAPI from '../Services/ZomatoAPI'
 
 const api = ZomatoAPI.create()
 
-export function* getCategories(api){
+export function* getCategories(){
     const response = yield call(api.getCategories)
     if(response.ok){
         //ok, call action from redux

@@ -22,10 +22,9 @@ class RestoListScreen extends Component {
     this.state = {
       restaurants: [],
       dataSource: ds.cloneWithRows([]),
-      // category
+      city: this.props.navigation.state.params.cityId,
+      categoryId: this.props.navigation.state.params.categoryId
     }
-
-    this.stateCity = { city: '280' }
   }
 
   navigateToHome(navigate){
@@ -35,7 +34,8 @@ class RestoListScreen extends Component {
   // call this when user navigate to this page
   // also when the city value changes
   prepareRestaurants(){
-    this.props.restaurantsRequest()
+    const {state} = this.props.navigation
+    this.props.restaurantsRequest(this.state.city, this.state.categoryId)
   }
 
   checkRestaurants(newProps){
@@ -56,16 +56,37 @@ class RestoListScreen extends Component {
   }
 
   renderRow (rowData) {
-    const { navigate } = this.props.navigation
+    // const { navigate } = this.props.navigation
     return (
       <TouchableOpacity style={styles.rowContainer}>
         <Tile
-          imageSrc={{uri: rowData.restaurant.thumb}}
+          imageSrc={{uri: rowData.restaurant.thumb }}
           title={rowData.restaurant.name}
-          height={150}
-          featured
-          caption={rowData.restaurant.cuisines}
-        />
+          height={250}
+        >
+        <View style={styles.infoContainer}>
+          <View style={styles.info}>
+            <View style={styles.infoLeft}>
+              <Icon name='bowl' type='entypo' color='#fb5f26' size={15}/>
+              <Text style={{ marginLeft: 3 }}>{rowData.restaurant.cuisines}</Text>  
+            </View>
+            <View style={ styles.infoRight }>
+              <Icon name='thumbs-up' type='entypo' color='#fb5f26' size={15}/>
+              <Text style={{ marginLeft: 3 }}>{rowData.restaurant.user_rating.rating_text}</Text>
+            </View>
+          </View>
+          <View style={styles.info}>
+            <View style={styles.infoLeft}>
+              <Icon name='location-pin' type='entypo' color='#fb5f26' size={15}/>
+              <Text style={{ marginLeft: 3 }}>{rowData.restaurant.location.address}</Text>
+            </View>
+            <View style={styles.infoRight}>
+              <Icon name='credit' type='entypo' color='#fb5f26' size={15}/>
+              <Text style={{ marginLeft: 3 }}>{rowData.restaurant.average_cost_for_two} (Average)</Text>
+            </View>
+          </View>
+        </View>
+        </Tile>
       </TouchableOpacity>
     )
   }
@@ -81,11 +102,11 @@ class RestoListScreen extends Component {
         <Header
           innerContainerStyles={styles.bars}
           outerContainerStyles={styles.bars}
-          leftComponent={<TouchableOpacity><Icon style={styles.leftButton} onPress={() => this.navigateToHome(navigate)} name='arrow-back' type='MaterialIcons' color='white'/></TouchableOpacity>}
-          centerComponent={<TouchableOpacity><Text onPress={() => this.navigateToHome(navigate)} style={styles.textName}>ReactResto</Text></TouchableOpacity>}
+          leftComponent={<TouchableOpacity><Icon style={styles.leftComponent} onPress={() => this.navigateToHome(navigate)} name='arrow-back' type='MaterialIcons' color='white'/></TouchableOpacity>}
+          centerComponent={<TouchableOpacity><Text onPress={() => this.navigateToHome(navigate)} style={styles.centerComponent}>ReactResto</Text></TouchableOpacity>}
           rightComponent={ 
           <Picker
-            style={styles.dropdown}
+            style={styles.rightComponent}
             selectedValue={this.state.city}
             onValueChange={(city) => this.setState({city})}>
             <Picker.Item label="New York City" value="280" />
@@ -134,7 +155,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     //redux action
-    restaurantsRequest: () => dispatch(ReactRestoActions.restaurantsRequest())
+    restaurantsRequest: (cityId, categoryId) => dispatch(ReactRestoActions.restaurantsRequest(cityId, categoryId))
   }
 }
 

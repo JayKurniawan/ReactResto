@@ -31,41 +31,34 @@ export default StyleSheet.create({
     marginTop: 5,
   },
   bars:{
-    backgroundColor: Colors.bars,
+    backgroundColor: Colors.bloodOrange,
     borderBottomWidth:0,
-    height:50
-  },
-  toolbar:{
-    backgroundColor: Colors.bars,
-    paddingTop:10,
-    paddingBottom:10,
-    flexDirection:'row'  
+    // height:60,
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   toolbarButton:{
     marginLeft: 40,            
     textAlign:'center',
     flex: 1,
   },
-  toolbarTitle:{
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex:1,        
-    position: 'absolute'        
+  leftComponent:{
+    // flex:1
   },
-  dropdown:{
-    backgroundColor: Colors.dropdown,
+  rightComponent:{
     color: Colors.snow,
-    marginLeft: 40,
-    flex: 1,
+    width: 70,
+    // marginTop: 100,
+  },
+  centerComponent:{
+    fontSize: 25,
+    color: Colors.silver,
+    fontWeight: 'bold',
+    marginLeft: 70
+    // marginBottom:10
   },
   viewDropdown:{
     justifyContent: 'center',
     backgroundColor: Colors.dropdown
   },
-  textName:{
-    fontSize: 20,
-    color: Colors.snow,
-    fontWeight: 'bold',
-    // marginBottom:10
-  }
 })
