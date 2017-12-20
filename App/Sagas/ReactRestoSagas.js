@@ -6,7 +6,7 @@ import ZomatoAPI from '../Services/ZomatoAPI'
 const api = ZomatoAPI.create()
 
 export function* getCategories(){
-    const response = yield call(api.getCategories)
+    const response = yield call(api.invokeRequest, 'categories', 'GET', '')
     if(response.ok){
         //ok, call action from redux
         console.log('Response : ', response)
@@ -16,9 +16,10 @@ export function* getCategories(){
     }
 }
 
-export function* getRestaurants(action){
+export function* getRestaurants(api,action){
+    // const { cityId, categoryId } = action
     console.log('Request for restaurants')
-    const response = yield call(api.getRestaurants)
+    const response = yield call(api.invokeRequest, 'search?entity_id=' +action.cityId+ '&entity_type=city&category=' +action.categoryId, 'GET', '')
     if(response.ok){
         console.log('Request success')
         yield put(ReactRestoActions.restaurantsSucceed(response.data))

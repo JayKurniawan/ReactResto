@@ -23,7 +23,7 @@ class RestoListScreen extends Component {
       restaurants: [],
       dataSource: ds.cloneWithRows([]),
       city: this.props.navigation.state.params.cityId,
-      categoryId: this.props.navigation.state.params.categoryId
+      categoryId: null
     }
   }
 
@@ -35,7 +35,8 @@ class RestoListScreen extends Component {
   // also when the city value changes
   prepareRestaurants(){
     const {state} = this.props.navigation
-    this.props.restaurantsRequest(this.state.city, this.state.categoryId)
+    this.state.categoryId = state.params.categoryId
+    this.props.restaurantsRequest(this.props.city, state.params.categoryId)
   }
 
   checkRestaurants(newProps){
@@ -56,11 +57,11 @@ class RestoListScreen extends Component {
   }
 
   renderRow (rowData) {
-    // const { navigate } = this.props.navigation
+    const { navigate } = this.props.navigation
     return (
       <TouchableOpacity style={styles.rowContainer}>
         <Tile
-          imageSrc={{uri: rowData.restaurant.thumb }}
+          imageSrc={{uri: rowData.restaurant.thumb}}
           title={rowData.restaurant.name}
           height={250}
         >
@@ -91,8 +92,18 @@ class RestoListScreen extends Component {
     )
   }
 
-  noRowData () {
-    return this.state.dataSource.getRowCount() === 0
+  searchResto(data){
+    let resto = this.state.restaurants
+    var newResto = []
+    for(var i=0; i<resto.length; i++){
+      if(resto[i].restaurant.name.includes(data)){
+        newResto.push(resto[i])
+      }
+    }
+
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(newResto)
+    })
   }
 
   render () {
@@ -116,8 +127,9 @@ class RestoListScreen extends Component {
           </Picker>}
         />
         <SearchBar
-          placeholder='Type Here...' 
-        />
+          onChangeText={(data)=>this.searchResto(data)}
+          placeholder='Find restaurant' 
+        />       
         <Content>        
           <ListView
             contentContainerStyle={styles.listContent}
@@ -147,8 +159,7 @@ const mapStateToProps = (state) => {
   return {
     restaurantsPayload: state.reactResto.restaurantsPayload,
     fetchRestaurants: state.reactResto.fetchRestaurants,
-    restaurantsErrorMessage: state.reactResto.restaurantsErrorMessage,
-    cityAndCategory: state.reactResto.cityAndCategory
+    restaurantsErrorMessage: state.reactResto.restaurantsErrorMessage
   }
 }
 

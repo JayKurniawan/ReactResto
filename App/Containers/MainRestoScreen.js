@@ -132,8 +132,7 @@ const mapStateToProps = (state) => {
     // ...redux state to props here
     categoriesPayload: state.reactResto.categoriesPayload,
     errorMessage: state.reactResto.errorMessage,
-    fetchCategories: state.reactResto.fetchCategories,
-    cityAndCategory: state.reactResto.cityAndCategory
+    fetchCategories: state.reactResto.fetchCategories
   }
 }
 
